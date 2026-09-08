@@ -1,0 +1,18 @@
+Metric,Uncontrolled,Rule-Based,Improvement (%)
+Total Grid Energy (kWh),1611.2399999999998,1594.2399999999998,1.0550880067525634
+Peak Grid Import (kW),156.0,115.0,26.282051282051285
+Total Grid Cost (INR),10484.985,10174.485,2.961377627149681
+Grid Overload Events,4.0,2.0,50.0
+Solar Generated (kWh),455.76,455.76,0.0
+Solar Used (kWh),455.76,455.76,0.0
+Solar Curtailed (kWh),0.0,0.0,0.0
+Solar Utilization (%),100.0,100.0,0.0
+Average Self-Sufficiency (%),19.908415341967974,21.513353613572907,8.061607335575523
+Minimum Battery SOC (%),50.0,31.13157894736841,-37.73684210526318
+Maximum Battery SOC (%),50.0,78.5,56.99999999999999
+Final Battery SOC (%),50.0,59.63157894736841,19.26315789473682
+Battery Charge Energy (kWh),0.0,60.0,0.0
+Battery Discharge Energy (kWh),0.0,45.0,0.0
+Final EV0 SOC (%),53.0,52.0,-1.8867924528301887
+Final EV1 SOC (%),90.0,52.0,-42.22222222222222
+Final EV2 SOC (%),76.0,51.0,-32.89473684210527
