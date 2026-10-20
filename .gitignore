@@ -2,6 +2,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.log
 .Python
 env/
 build/
@@ -22,6 +23,7 @@ wheels/
 
 # Virtual environments
 venv/
+.venv/
 ENV/
 
 # VS Code / IDE

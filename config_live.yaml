@@ -1,0 +1,83 @@
+# config_live.yaml
+# Configuration for Live Smart Grid Dispatch Controller on Raspberry Pi
+
+mqtt:
+  broker_host: "localhost"
+  broker_port: 1883
+  keepalive: 60
+  username: ""
+  password: ""
+  client_id: "pi_energy_controller"
+  # Both single JSON topic and granular subtopics are supported
+  telemetry_topic: "grid/esp1/telemetry"
+  subtopics:
+    load: "grid/esp1/load"
+    solar: "grid/esp1/solar"
+    battery_soc: "grid/esp1/battery_soc"
+    ev0_soc: "grid/esp1/ev0_soc"
+    ev1_soc: "grid/esp1/ev1_soc"
+    ev2_soc: "grid/esp1/ev2_soc"
+
+timing:
+  decision_interval_seconds: 5.0    # Evaluate dispatch every 5 seconds
+  data_stale_timeout_seconds: 15.0  # Fallback to safe mode if no data for 15s
+  dt_hours: 1.0                     # Energy step size (1.0h matches trained DQN time horizons)
+  timezone: "Asia/Kolkata"          # Pi system timezone for hour-of-day tariff mapping
+  fast_forward: false               # If true, simulate clock advancement on each step
+
+model:
+  model_path: "models/best_dqn_model.pth"
+  engine: "torch"                   # "torch" (standard) or "numpy" (zero-dependency lightweight)
+  state_size: 12
+  action_size: 40
+
+grid_specs:
+  grid_limit_kw: 100.0
+  battery:
+    capacity_kwh: 100.0
+    initial_soc: 50.0
+    min_soc: 20.0
+    max_soc: 95.0
+    max_charge_kw: 25.0
+    max_discharge_kw: 25.0
+    efficiency: 0.95
+  solar:
+    peak_kw: 60.0
+    sunrise: 6.0
+    sunset: 18.0
+  evs:
+    - id: 0
+      capacity_kwh: 50.0
+      initial_soc: 30.0
+      target_soc: 80.0
+      max_charge_kw: 7.0
+      efficiency: 0.95
+    - id: 1
+      capacity_kwh: 50.0
+      initial_soc: 40.0
+      target_soc: 90.0
+      max_charge_kw: 7.0
+      efficiency: 0.95
+    - id: 2
+      capacity_kwh: 50.0
+      initial_soc: 25.0
+      target_soc: 80.0
+      max_charge_kw: 7.0
+      efficiency: 0.95
+
+lcd:
+  enabled: true
+  mock: false                       # Override with --mock-lcd on CLI
+  cols: 20                          # 20 or 16
+  rows: 4                           # 4 or 2
+  i2c_expander: "PCF8574"
+  i2c_address: 0x27                 # Common default: 0x27 or 0x3F
+  i2c_bus: 1                        # Default I2C bus on Raspberry Pi 3/4/5
+  rotation_interval_seconds: 3.0    # Cycle between Screen 1 and Screen 2 every 3s
+
+logging:
+  level: "INFO"
+  log_to_file: true
+  file_path: "live_controller.log"
+  max_bytes: 5242880                # 5MB
+  backup_count: 3

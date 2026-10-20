@@ -1,0 +1,26 @@
+[Unit]
+Description=Smart Energy Grid Live Dispatch Controller
+After=network.target mosquitto.service
+Wants=mosquitto.service
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/smart-energy-grid
+ExecStart=/home/pi/smart-energy-grid/.venv/bin/python live/main_live.py --config config_live.yaml
+Restart=on-failure
+RestartSec=5s
+KillSignal=SIGTERM
+TimeoutStopSec=10s
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smart-grid-controller
+
+# Environment
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
